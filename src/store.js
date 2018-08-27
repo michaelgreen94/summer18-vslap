@@ -17,14 +17,42 @@ export default new Vuex.Store({
       },
       items: []
     }),
-    machine: {
-      name: "Vendr"
-
-    }
+    machine: ({
+      name: "Vendr",
+      trasnactionTotal: 0,
+      machineTotal: 0,
+      currency: {
+        bottleCaps: 1
+      },
+      machineItems: {
+        buffout: {
+          price: 15,
+          id: 'a1',
+          quantity: 10,
+          img: '../assets/Fallout4_Buffout.png'
+        },
+        mentats: {
+          price: 20,
+          id: 'a2',
+          quantity: 10,
+          img: '../assets/Fallout4_Mentats.png'
+        },
+        steady: {
+          price: 17,
+          id: 'a3',
+          quantity: 10,
+          img: '../assets/Fallout4_Psycho.png'
+        }
+      },
+      cart: []
+    })
   },
   mutations: {
     setHealth(state, actualHealth) {
       state.target.health = actualHealth
+    },
+    setTransTotal(state, actualTotal) {
+      state.machine.machineTotal = actualTotal
     }
   },
   actions: {
@@ -32,6 +60,10 @@ export default new Vuex.Store({
       //async call
       let newHealth = state.target.health - state.target.attacks[payload]
       commit('setHealth', newHealth)
+    },
+    addMoney({ dispatch, commit, state }, payload) {
+      let total = state.machine.machineTotal + state.machine.currency[payload]
+      commit('setTransTotal', total)
     }
   }
 })
